@@ -1,45 +1,29 @@
-# Vercel Localhost Router
+# Localhost Router
 
-This project forwards every HTTP request that reaches Vercel to the URL in `UPSTREAM_URL`.
+This project returns a static HTML file from Vercel for every path and redirects the browser to the same path on `http://localhost:3000`.
 
-Important: a deployed Vercel project cannot reach your laptop at `localhost:3000`. On Vercel, `localhost` means the Vercel runtime itself. To send traffic to an app running on your machine, expose that app with a public tunnel and set `UPSTREAM_URL` to the tunnel URL.
+Example:
 
-## Local test
-
-Run your real app on port `3000`, then run this project with Vercel:
-
-```sh
-cp .env.example .env
-vercel dev
+```txt
+https://localhost-router.vercel.app/cart?x=1
 ```
 
-Requests to the Vercel dev URL will be forwarded to `http://127.0.0.1:3000`.
+redirects the browser to:
+
+```txt
+http://localhost:3000/cart?x=1
+```
+
+This is not a server-side proxy. It only works for a browser running on the same machine where the target app is available at `localhost:3000`.
 
 ## Deploy to Vercel
 
-1. Start your real app locally on port `3000`.
-2. Create a public tunnel to it:
+Connect this repository to Vercel and set the production branch to `release`.
 
-```sh
-ngrok http 3000
-```
+No environment variables are required.
 
-or:
+After deployment, every path on the Vercel URL redirects to the same path on `localhost:3000`.
 
-```sh
-cloudflared tunnel --url http://127.0.0.1:3000
-```
+## Local Target
 
-3. In Vercel, set:
-
-```sh
-UPSTREAM_URL=https://your-public-tunnel-url.example
-```
-
-4. Deploy this project to Vercel.
-
-## Notes
-
-- HTTP methods, request bodies, response headers, and paths are proxied.
-- WebSockets are not supported by Vercel serverless functions.
-- Long-running requests are limited by Vercel function timeouts and `PROXY_TIMEOUT_MS`.
+Keep your actual app running locally on port `3000`.

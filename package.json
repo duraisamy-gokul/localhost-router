@@ -2,11 +2,11 @@
   "name": "vercel-localhost-router",
   "version": "0.1.0",
   "private": true,
-  "description": "A tiny Vercel reverse proxy that forwards all HTTP requests to a configured upstream.",
+  "description": "A tiny Vercel static redirector that sends browser requests to localhost:3000.",
   "scripts": {
     "dev": "vercel dev"
   },
   "engines": {
-    "node": ">=18"
+    "node": "22.x"
   }
 }
